@@ -4,6 +4,8 @@ import urllib2, json
 
 app = Flask(__name__)
 
+#Simple 2 pages: search page, results page.
+
 @app.route('/',methods=["GET","POST"])
 def main():
     if request.method == "POST":
@@ -11,9 +13,9 @@ def main():
         url = "https://www.healthcare.gov/api/index.json"
         json_blob = urllib2.urlopen(url)
         text = json_blob.read()
-        data = json.loads(text) #this is a list
+        data = json.loads(text) #this is a list of dicts
     
-        results = []
+        results = [] #all of the matched result dicts will be in here. Basically another list of dicts
 
         for d in data:
             if not type(d) == bool:
@@ -22,7 +24,7 @@ def main():
 
         #print results
         
-        session['data'] = results
+        session['data'] = results #stores the results in the session data. You might want to pop it later, but eh.
         return redirect(url_for("results"))
 
     return render_template("main.html")
@@ -31,7 +33,7 @@ def main():
 @app.route('/results')
 def results():
     return render_template("results.html", data=session['data'])
-
+    #takes that list and uses it in the site to create search results
 
 app.secret_key="Try_to_break_this_herpderpherpderpherpderp"
 
