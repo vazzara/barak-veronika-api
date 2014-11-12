@@ -20,19 +20,21 @@ def main():
                 if query in d['bite'] or query in d['title']:
                     results.append(d)
 
-        #print data
-        #return render_template("main.html")
-        print results
-
-        return redirect(url_for("results", data=results))
+        #print results
+        
+        session['data'] = results
+        return redirect(url_for("results"))
 
     return render_template("main.html")
 
 
 @app.route('/results')
-def results(data):
-    return render_template("results.html", data=data)
-    
+def results():
+    return render_template("results.html", data=session['data'])
+
+
+app.secret_key="Try_to_break_this_herpderpherpderpherpderp"
+
 if __name__ == "__main__":
     app.debug = True
     app.run(port = 5005) #when everyone in class tests their projects we avoid 5000"

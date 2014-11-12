@@ -16,7 +16,13 @@
 {% block main %}
 <title>Main</title>
 <div class="container">
-  <h3><b><center>Results</center></b></h3>
-    <p>{{data}}</p>
+  <h1><b><center>Results</center></b></h1>
+  <br>
+  {% for dict in data %}
+  <h2>{{dict['title']}}</h2>
+  <p><a href="https://www.healthcare.gov{{dict['url']}}">https://www.healthcare.gov{{dict['url']}}</a></p>
+  <h4><i>{{dict['bite']}}</i></h4>
+  <br>
+  {% endfor %}
 </div>
 {% endblock main %}
